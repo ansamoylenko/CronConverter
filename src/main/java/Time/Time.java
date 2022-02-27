@@ -51,7 +51,6 @@ public abstract class Time
     public Result isRegularity()
     {
         values = IntStream.of(values).distinct().toArray();
-        System.out.println(Arrays.toString(values));
         Arrays.sort(values);
 
         int dif = values[1] - values[0];

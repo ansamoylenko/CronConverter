@@ -39,6 +39,10 @@ public class Converter implements DatesToCronConverter
             weekDays.add(date.get(Calendar.DAY_OF_WEEK));
         }
 
+        //for(Calendar date: dates) System.out.println(date.getTime());
+        //for(Integer minute: minutes) System.out.println(minute);
+
+
         Time cronMinute = new Minute(minutes.stream().mapToInt(i->i).toArray());
         Time cronHour = new Hour(hours.stream().mapToInt(i->i).toArray());
         Time cronDay = new Day(days.stream().mapToInt(i->i).toArray());
@@ -46,10 +50,21 @@ public class Converter implements DatesToCronConverter
         Time cronWeekDay = new WeekDay(weekDays.stream().mapToInt(i->i).toArray());
 
 
-        Result result = cronMinute.isRegularity();
-        if(result.getFlag()) return result.toString();
-        else return "nothing";
+        return Check(cronHour);
 
+
+    }
+
+    public String Check(Time time)
+    {
+        Result regularity= time.isRegularity();
+        Result range = time.isRange();
+        Result constant = time.isConstant();
+
+        if(regularity.getFlag()) return regularity.toString();
+        else if(range.getFlag()) return range.toString();
+        else if(constant.getFlag()) return constant.toString();
+        else return " * ";
     }
 
     @Override

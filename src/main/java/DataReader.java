@@ -9,8 +9,8 @@ import Exception.DatesToCronConvertException;
 
 public class DataReader
 {
-    BufferedReader reader;
-    ArrayList<Calendar> dates;
+    public BufferedReader reader;
+    public ArrayList<Calendar> dates;
 
     public DataReader() throws FileNotFoundException
     {
@@ -31,7 +31,7 @@ public class DataReader
 
         DateFormat df = new SimpleDateFormat(dateFormat);
         DateFormat cf = new SimpleDateFormat(cronFormat, Locale.ENGLISH);
-        Calendar dates = new GregorianCalendar();
+        Calendar date;
 
         // считываем сначала первую строку
         String line = reader.readLine();
@@ -40,7 +40,9 @@ public class DataReader
         {
             try
             {
-                dates.setTime(df.parse(line.replace("\"", "")));
+                date = new GregorianCalendar() ;
+                date.setTime(df.parse(line.replace("\"", "")));
+                dates.add(date);
             }
             catch (Exception e)
             {
@@ -52,5 +54,4 @@ public class DataReader
             line = reader.readLine();
         }
     }
-
 }
