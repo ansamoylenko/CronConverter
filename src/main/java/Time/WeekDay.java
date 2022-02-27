@@ -5,8 +5,8 @@ public class WeekDay extends Time
     public WeekDay (int[] values)
     {
         super(values);
-        this.valueMin = 0;
-        this.valueMax = 59;
+        this.valueMin = 1;
+        this.valueMax = 7;
     }
 
 

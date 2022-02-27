@@ -43,6 +43,8 @@ public class DataReader
                 date = new GregorianCalendar() ;
                 date.setTime(df.parse(line.replace("\"", "")));
                 dates.add(date);
+
+                //System.out.println(date.getTime());
             }
             catch (Exception e)
             {

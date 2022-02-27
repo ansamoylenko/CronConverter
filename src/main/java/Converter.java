@@ -7,7 +7,9 @@ import Time.Result;
 
 import Time.Time;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -35,13 +37,9 @@ public class Converter implements DatesToCronConverter
             minutes.add(date.get(Calendar.MINUTE));
             hours.add(date.get(Calendar.HOUR));
             days.add(date.get(Calendar.DAY_OF_MONTH));
-            months.add(date.get(Calendar.MONTH));
+            months.add(date.get(Calendar.MONTH)+1);
             weekDays.add(date.get(Calendar.DAY_OF_WEEK));
         }
-
-        //for(Calendar date: dates) System.out.println(date.getTime());
-        //for(Integer minute: minutes) System.out.println(minute);
-
 
         Time cronMinute = new Minute(minutes.stream().mapToInt(i->i).toArray());
         Time cronHour = new Hour(hours.stream().mapToInt(i->i).toArray());
@@ -49,10 +47,43 @@ public class Converter implements DatesToCronConverter
         Time cronMonth = new Month(months.stream().mapToInt(i->i).toArray());
         Time cronWeekDay = new WeekDay(weekDays.stream().mapToInt(i->i).toArray());
 
+        //"0 0/30 8-9 * * *"
 
-        return Check(cronHour);
+        Time[] mas = new Time[5];
+
+        mas[0] = cronMinute;
+        mas[1] = cronHour;
+        mas[2] = cronDay;
+        mas[3] = cronMonth;
+        mas[4] = cronWeekDay;
+
+        String result  = "";
+
+        boolean flag = false;
+
+        for(int i = 4; i >= 0; i--)
+        {
+            String res = Check(mas[i]);
+
+            if (res =="" || flag) result = "*" + result;
+            else if(!flag)
+            {
+                result = res + result;
+                flag = true;
+            }
+
+            result = " " + result;
 
 
+
+
+
+        }
+
+
+        return  result;
+        //return "0 " + Check(cronMinute) + " " + Check(cronHour) + " " + Check(cronDay) + " " + Check(cronMonth) + " "+ Check(cronWeekDay);
+        //return "+";
     }
 
     public String Check(Time time)
@@ -61,16 +92,17 @@ public class Converter implements DatesToCronConverter
         Result range = time.isRange();
         Result constant = time.isConstant();
 
-        if(regularity.getFlag()) return regularity.toString();
+        if(constant.getFlag()) return constant.toString();
         else if(range.getFlag()) return range.toString();
-        else if(constant.getFlag()) return constant.toString();
-        else return " * ";
+        else if(regularity.getFlag()) return regularity.toString();
+        else return "";
     }
 
     @Override
     public void getImplementationInfo()
     {
-        System.out.println("Самойленко Александр Николаевич, " + this.getClass().getSimpleName() + " git: ");
+        // ФИО, имя класса реализации, пакет, ссылка на github
+        System.out.println("Самойленко Александр Николаевич, class: " + this.getClass().getSimpleName() + " https://github.com/ansamoylenko");
     }
 }
-    //реализации интерфейса (ФИО, имя класса реализации, пакет, ссылка на github).
+

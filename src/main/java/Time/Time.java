@@ -53,12 +53,17 @@ public abstract class Time
         values = IntStream.of(values).distinct().toArray();
         Arrays.sort(values);
 
+        if(values.length == 1) return new Result(false, "");
+
         int dif = values[1] - values[0];
         int numberOfElements = (valueMax - valueMin)/dif + 1;
 
-        for( int i = 1; i < values.length-1; i++)
+        for( int i = 0; i < values.length-1; i++)
         {
-            if ((values[i+1] - values[i] != dif) || numberOfElements != values.length) return new Result(false, "");
+            if (((values[i+1] - values[i]) != dif) | (numberOfElements != values.length))
+            {
+                return new Result(false, "");
+            }
         }
         return new Result(true,values[0] + "/" + dif);
     }
