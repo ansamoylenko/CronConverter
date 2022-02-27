@@ -81,7 +81,9 @@ public class Converter implements DatesToCronConverter
         }
 
 
-        return  result;
+        //return  result;
+
+        return "0 " + Check(cronMinute) + " " + Check(cronHour) + " " + Check(cronDay) + " " + Check(cronMonth) + " "+ Check(cronWeekDay);
         //return "0 " + Check(cronMinute) + " " + Check(cronHour) + " " + Check(cronDay) + " " + Check(cronMonth) + " "+ Check(cronWeekDay);
         //return "+";
     }
@@ -95,7 +97,7 @@ public class Converter implements DatesToCronConverter
         if(constant.getFlag()) return constant.toString();
         else if(range.getFlag()) return range.toString();
         else if(regularity.getFlag()) return regularity.toString();
-        else return "";
+        else return "*";
     }
 
     @Override
