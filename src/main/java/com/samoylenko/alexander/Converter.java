@@ -1,3 +1,5 @@
+package com.samoylenko.alexander;
+
 import Time.Minute;
 import Time.Hour;
 import Time.Day;
@@ -7,16 +9,14 @@ import Time.Result;
 
 import Time.Time;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 interface DatesToCronConverter
 {
-    public String convert(List<Calendar> dates);
-    public void getImplementationInfo();
+    String convert(List<Calendar> dates);
+    void getImplementationInfo();
 }
 
 public class Converter implements DatesToCronConverter
@@ -47,8 +47,7 @@ public class Converter implements DatesToCronConverter
         Time cronMonth = new Month(months.stream().mapToInt(i->i).toArray());
         Time cronWeekDay = new WeekDay(weekDays.stream().mapToInt(i->i).toArray());
 
-        //"0 0/30 8-9 * * *"
-
+        /*
         Time[] mas = new Time[5];
 
         mas[0] = cronMinute;
@@ -58,7 +57,6 @@ public class Converter implements DatesToCronConverter
         mas[4] = cronWeekDay;
 
         String result  = "";
-
         boolean flag = false;
 
         for(int i = 4; i >= 0; i--)
@@ -74,18 +72,9 @@ public class Converter implements DatesToCronConverter
 
             result = " " + result;
 
-
-
-
-
         }
-
-
-        //return  result;
-
+        */
         return "0 " + Check(cronMinute) + " " + Check(cronHour) + " " + Check(cronDay) + " " + Check(cronMonth) + " "+ Check(cronWeekDay);
-        //return "0 " + Check(cronMinute) + " " + Check(cronHour) + " " + Check(cronDay) + " " + Check(cronMonth) + " "+ Check(cronWeekDay);
-        //return "+";
     }
 
     public String Check(Time time)
@@ -107,4 +96,5 @@ public class Converter implements DatesToCronConverter
         System.out.println("Самойленко Александр Николаевич, class: " + this.getClass().getSimpleName() + " https://github.com/ansamoylenko");
     }
 }
+
 
